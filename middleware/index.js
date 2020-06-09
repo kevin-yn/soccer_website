@@ -20,8 +20,18 @@ middlewareObj.checkTeamOwnership = function(req, res, next) {
         req.flash("error", "You have to log in first!");
         return res.redirect("back");
     }
-    Team.findById(req.params.team_id, function(err, foundTeam) {
+    var team_id;
+    if(req.params.team_id) {
+        team_id = req.params.team_id; // for use in most routes
+    } else {
+        team_id = req.body.team_id;
+    }
+    Team.findById(team_id, function(err, foundTeam) {
         if(err) {
+            console.log(err);
+            return res.redirect("back");
+        }
+        if(!foundTeam) {
             req.flash("error", "Team not found");
             return res.redirect("back");
         }
