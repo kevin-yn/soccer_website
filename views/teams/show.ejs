@@ -42,14 +42,16 @@
                     </li>
                 <% }); %>
                 <li class="list-group-item">
-                    <label>Add new player</label>
-                    <form action="/players" method="POST">
-                        <input class="form-control" type="text" name="player[name]" placeholder="new player name">
-                        <input class="form-control" type="hidden" name="team_id" value="<%- team._id %>">
-                        <div class="form-group">
-                            <button class="btn btn-lg btn-primary btn-block">Add</button>
-                        </div>
-                    </form>
+                    <% if(auth) { %>
+                        <label>Add new player</label>
+                        <form action="/players" method="POST">
+                            <input class="form-control" type="text" name="player[name]" placeholder="new player name">
+                            <input class="form-control" type="hidden" name="team_id" value="<%- team._id %>">
+                            <div class="form-group">
+                                <button class="btn btn-lg btn-primary btn-block">Add</button>
+                            </div>
+                        </form>
+                    <% } %>
                 </li>
             </ul>
         </div>
