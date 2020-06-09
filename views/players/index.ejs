@@ -1,0 +1,13 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <ul class="list-group">
+        <% players.forEach(function(player) { %>
+            <li class="list-group-item">
+                <%- player.name %>
+                <img style="height: 3em;" src="<%- player.team.profile_pic %>" class="img-fluid" alt="Responsive image">
+            </li>
+        <% }); %>
+    </ul>
+</div>
+<%- include("../partials/footer") %>

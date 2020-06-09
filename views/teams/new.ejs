@@ -1,0 +1,28 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+    <h1 style="text-align: center">Create a New Team</h1>
+    <div class="row">
+        <div style="width: 30%; margin: 25px auto;">
+            <form action="/teams" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="team[name]" placeholder="team_name" value="DEFAULT TEAM">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="team[profile_pic]" placeholder="profile pic url" value="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/logo_Google_FullColor_3x_830x271px.max-2800x2800.png">
+                </div>
+                <label> Players </label>
+                <% for(var i = 0; i < 5; i++) { %>
+                    <div class="form-group">
+                            <input class="form-control" type="text" name="players[<%- i %>]" placeholder="players #<%- i %>" value="P<%- i %>">
+                    </div>
+                <% } %>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Create</button>
+                </div>
+            </form>
+            <a href="/teams">Go Back</a>
+        </div>
+    </div>
+</div>
+<%- include("../partials/footer") %>
