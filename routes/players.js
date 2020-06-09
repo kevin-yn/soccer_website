@@ -25,7 +25,7 @@ router.get("", function(req, res) {
 });
 
 // CREATE - add a new player to the team
-router.post("", function(req, res) {
+router.post("", middlewareObj.checkPlayerOwnership, function(req, res) {
     Team.findById(req.body.team_id, function(err, foundTeam) {
         if(err) {
             console.log(err);
