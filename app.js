@@ -76,15 +76,19 @@ app.use("/teams", teamRoutes);
 app.use("/players", playerRoutes);
 
 
+app.get("/test", function(req, res) {
+    res.render("test");
+});
+
 app.get("*", function(req, res) {
-    res.send("Wrong address bro");
+    res.render("error")
 });
 
-// app.listen(8080, () => {
-//     console.log("listening on port 8080");
-// })
+app.listen(8080, () => {
+    console.log("listening on port 8080");
+})
 
 
-app.listen(process.env.PORT, process.env.IP, function () {
-    console.log("The Soccer_website Server Has Started!");
-});
+// app.listen(process.env.PORT, process.env.IP, function () {
+//     console.log("The Soccer_website Server Has Started!");
+// });

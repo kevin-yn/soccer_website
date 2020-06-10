@@ -6,3 +6,10 @@
     width: 80%;
     align-self: center;
 }
+
+#sticky-footer {
+  flex-shrink: none;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

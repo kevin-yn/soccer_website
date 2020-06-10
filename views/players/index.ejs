@@ -1,11 +1,19 @@
 <%- include("../partials/header") %>
 
 <div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>All Players are here</h1>
+            <!-- <p>
+                <a class="btn btn-primary btn-large" href="/teams/new">Create new team</a>
+            </p> -->
+        </div>
+    </header>
     <ul class="list-group">
         <% players.forEach(function(player) { %>
-            <li class="list-group-item">
-                <%- player.name %>
-                <img style="height: 3em;" src="<%- player.team.profile_pic %>" class="img-fluid" alt="Responsive image">
+            <li class="list-group-item" style="display: flex; justify-content: space-between;">
+                <h5 style="display: inline;"><%- player.name %></h5>
+                <img style="height: 3em;" src="<%- player.team.profile_pic %>" alt="Responsive image">
             </li>
         <% }); %>
     </ul>

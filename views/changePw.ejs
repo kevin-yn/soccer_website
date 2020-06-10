@@ -1,0 +1,11 @@
+<%- include("./partials/header") %>
+
+<h1>Change Password</h1>
+<form action="/changePw" method="POST">
+    <input type="text" name="username" placeholder="username">
+    <input type="password" name="oldpassword" placeholder="oldpassword">
+    <input type="password" name="newpassword" placeholder="newpassword">
+    <button>Submit</button>
+</form>
+
+<%- include("./partials/footer") %>

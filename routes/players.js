@@ -32,11 +32,24 @@ router.post("", middlewareObj.checkTeamOwnership, function(req, res) {
             req.flash("error", "Failed to add player");
             return res.redirect("back");
         }
+        if(!foundTeam) {
+            req.flash("error", "Team not found");
+            return res.redirect("back");
+        }
         var newPlayer = new Player({
             name: req.body.player.name,
             team: foundTeam._id
         })
-        newPlayer.save();
+        newPlayer.save(function(err, savedPlayer) {
+            if(err) {
+                console.log(err);
+                req.flash("error", "Failed to add player");
+                return res.redirect("back");
+            } else {
+                console.log(savedPlayer);
+            }
+        });
+
         foundTeam.players.push(newPlayer);
         foundTeam.save();
         res.redirect("back");
@@ -46,6 +59,10 @@ router.post("", middlewareObj.checkTeamOwnership, function(req, res) {
 // Delete - delete a player and update the team
 router.delete("/:player_id", middlewareObj.checkPlayerOwnership, async function(req, res) {
     Player.findById(req.params.player_id, function(err, foundPlayer) {
+        if (!foundPlayer) {
+            req.flash("error", "Player not found");
+            return res.redirect("back");
+        }
         if(err) {
             console.log(err);
         } else {

@@ -58,10 +58,13 @@ router.get("/:team_id", function(req, res) {
     Team.findById(req.params.team_id).populate("players").exec(function(err, foundTeam) {
         if(err) {
             console.log(err);
-            res.redirect("back");
-        } else {
-            res.render("teams/show", {team: foundTeam});
+            return res.redirect("back");
+        } 
+        if (!foundTeam) {
+            req.flash("error", "Team not found");
+            return res.redirect("back");
         }
+        res.render("teams/show", {team: foundTeam});
     });
 });
 
@@ -70,10 +73,13 @@ router.get("/:team_id/edit", middlewareObj.checkTeamOwnership, function(req, res
     Team.findById(req.params.team_id, function(err, foundTeam) {
         if(err) {
             console.log(err);
-            res.redirect("back");
-        } else {
-            res.render("teams/edit", {team: foundTeam});
+            return res.redirect("back");
+        } 
+        if (!foundTeam) {
+            req.flash("error", "Team not found");
+            return res.redirect("back");
         }
+        res.render("teams/edit", { team: foundTeam });
     });
 });
 
@@ -81,10 +87,13 @@ router.put("/:team_id", middlewareObj.checkTeamOwnership, function(req, res) {
     Team.findByIdAndUpdate(req.params.team_id, req.body.team, function(err, foundTeam) {
         if(err) {
             console.log(err);
-            res.redirect("back");
-        } else {
-            res.redirect("/teams/" + req.params.team_id);
+            return res.redirect("back");
+        } 
+        if (!foundTeam) {
+            req.flash("error", "Team not found");
+            return res.redirect("back");
         }
+        res.redirect("/teams/" + req.params.team_id);
     });
 });
 
@@ -92,6 +101,10 @@ router.put("/:team_id", middlewareObj.checkTeamOwnership, function(req, res) {
 router.delete("/:team_id", middlewareObj.checkTeamOwnership, async function(req, res) {
     try {
         let foundTeam = await Team.findById(req.params.team_id);
+        if (!foundTeam) {
+            req.flash("error", "Team not found");
+            return res.redirect("back");
+        }
         await foundTeam.remove();
         req.flash("success", "Team: " + foundTeam.name + " deleted");
         res.redirect("/teams");
